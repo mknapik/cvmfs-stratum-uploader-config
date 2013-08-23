@@ -58,6 +58,12 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,-)
 %doc
 
+%post
+sed -i -e 's/__FULL_HOST_NAME__/'`hostname`'/g' /var/www/cvmfs-stratum-uploader/site.httpd.conf
+ln -sf /var/www/cvmfs-stratum-uploader/site.httpd.conf /etc/httpd/conf.d/cvmfs-stratum-uploader.conf
 
+%postun
+rm  /etc/httpd/conf.d/cvmfs-stratum-uploader.conf
 
 %changelog
+
