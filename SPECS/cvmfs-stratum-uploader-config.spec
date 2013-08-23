@@ -1,5 +1,5 @@
 Name:           cvmfs-stratum-uploader-config
-Version:        0.1.5
+Version:        0.1.6
 Release:        1%{?dist}
 Summary:        Provides example configuration for cvmfs-stratum-uploader.
 
@@ -17,7 +17,7 @@ Packager:       Michal.Knapik@stfc.ac.uk
 #Requires:       
 
 AutoReqProv: no
-Requires: httpd, cvmfs-stratum-uploader >= 0.1.5
+Requires: httpd, cvmfs-stratum-uploader >= 0.1.6
 
 
 %description
@@ -25,6 +25,7 @@ Provides configuration for cvmfs-stratum-uploader.
 
 
 %prep
+#tar czvf %name-%version.tar.gz %name # TODO
 %setup -q
 
 %build
@@ -61,6 +62,9 @@ rm -rf $RPM_BUILD_ROOT
 %post
 sed -i -e 's/__FULL_HOST_NAME__/'`hostname`'/g' /var/www/cvmfs-stratum-uploader/site.httpd.conf
 ln -sf /var/www/cvmfs-stratum-uploader/site.httpd.conf /etc/httpd/conf.d/cvmfs-stratum-uploader.conf
+DJANGO_CONFIG_FILE=/var/www/cvmfs-stratum-uploader/application.cfg DJANGO_CONFIGURATION=production manage-cvmfs-stratum-uploader.py collectstatic --noinput --verbosity=0
+DJANGO_CONFIG_FILE=/var/www/cvmfs-stratum-uploader/application.cfg DJANGO_CONFIGURATION=production manage-cvmfs-stratum-uploader.py syncdb --verbosity=0
+DJANGO_CONFIG_FILE=/var/www/cvmfs-stratum-uploader/application.cfg DJANGO_CONFIGURATION=production manage-cvmfs-stratum-uploader.py migrate --verbosity=0
 
 %postun
 rm  /etc/httpd/conf.d/cvmfs-stratum-uploader.conf
