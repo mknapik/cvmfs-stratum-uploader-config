@@ -61,8 +61,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 echo 'Setup application config'
-echo %{SECRET_KEY}
-echo %{CSRF_MIDDLEWARE_SECRET}
 sed -i -e 's|__SECRET_KEY__|'%{SECRET_KEY}'|g' %{PROJECT_ROOT}/application.cfg
 sed -i -e 's|__CSRF_MIDDLEWARE_SECRET__|'%{CSRF_MIDDLEWARE_SECRET}'|g' %{PROJECT_ROOT}/application.cfg
 sed -i -e 's|__PROJECT_ROOT__|'%{PROJECT_ROOT}'|g' %{PROJECT_ROOT}/application.cfg
