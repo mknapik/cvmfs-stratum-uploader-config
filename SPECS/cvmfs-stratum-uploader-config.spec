@@ -6,7 +6,7 @@ Summary:        Provides example configuration for cvmfs-stratum-uploader.
 Group:          Development/Libraries
 License:        Apache License
 URL:            git://github.com/mknapik/cvmfs-stratum-uploader-config.git
-Source0:        %name-%version.tar.gz
+Source0:        %name
 BuildArch:      noarch
 BuildRoot:      %{_tmppath}/%{name}-${version}-${release}-root-%(%{__id_u} -n)
 
@@ -14,19 +14,14 @@ Vendor:         STFC GridPP, Michal Knapik <Michal.Knapik@stfc.ac.uk>
 Packager:       Michal.Knapik@stfc.ac.uk
 
 #BuildRequires:  
-#Requires:       
 
 AutoReqProv: no
-Requires: httpd, cvmfs-stratum-uploader >= 0.1.6
-
+Requires: httpd >= 2.2.15, cvmfs-stratum-uploader >= 0.1.6
 
 %description
 Provides configuration for cvmfs-stratum-uploader.
 
-
 %prep
-#tar czvf %name-%version.tar.gz %name # TODO
-%setup -q
 
 %build
 
@@ -40,13 +35,12 @@ install -d $RPM_BUILD_ROOT/var/www/cvmfs-stratum-uploader/db
 install -d $RPM_BUILD_ROOT/var/www/cvmfs-stratum-uploader/media
 install -d $RPM_BUILD_ROOT/var/www/cvmfs-stratum-uploader/static
 # create files
-install ./var/www/cvmfs-stratum-uploader/site.httpd.conf $RPM_BUILD_ROOT/var/www/cvmfs-stratum-uploader/site.httpd.conf
-install ./var/www/cvmfs-stratum-uploader/application.cfg $RPM_BUILD_ROOT/var/www/cvmfs-stratum-uploader/application.cfg
-install ./var/www/cvmfs-stratum-uploader/db/db.sqlite3 $RPM_BUILD_ROOT/var/www/cvmfs-stratum-uploader/db/db.sqlite3
+install %{SOURCE0}/var/www/cvmfs-stratum-uploader/site.httpd.conf $RPM_BUILD_ROOT/var/www/cvmfs-stratum-uploader/
+install %{SOURCE0}/var/www/cvmfs-stratum-uploader/application.cfg $RPM_BUILD_ROOT/var/www/cvmfs-stratum-uploader/
+install %{SOURCE0}/var/www/cvmfs-stratum-uploader/db/db.sqlite3 $RPM_BUILD_ROOT/var/www/cvmfs-stratum-uploader/db/
 
 %clean
 rm -rf $RPM_BUILD_ROOT
-
 
 %files
 %attr(700,apache,apache) /var/www/cvmfs-stratum-uploader/db
