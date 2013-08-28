@@ -61,7 +61,8 @@ DJANGO_CONFIG_FILE=/var/www/cvmfs-stratum-uploader/application.cfg DJANGO_CONFIG
 DJANGO_CONFIG_FILE=/var/www/cvmfs-stratum-uploader/application.cfg DJANGO_CONFIGURATION=production manage-cvmfs-stratum-uploader.py migrate --verbosity=0
 
 %postun
-rm  /etc/httpd/conf.d/cvmfs-stratum-uploader.conf
+rm /etc/httpd/conf.d/cvmfs-stratum-uploader.conf
+rm -r /var/www/cvmfs-stratum-uploader/collectstatic
 
 %changelog
 
