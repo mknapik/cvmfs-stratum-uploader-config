@@ -76,6 +76,8 @@ ln -sf %{PROJECT_ROOT}/site.httpd.conf %{SITES_AVAILABLE_PATH}/cvmfs-stratum-upl
 echo 'Setup database'
 DJANGO_CONFIG_FILE=%{PROJECT_ROOT}/application.cfg DJANGO_CONFIGURATION=production manage-cvmfs-stratum-uploader.py syncdb --verbosity=0
 DJANGO_CONFIG_FILE=%{PROJECT_ROOT}/application.cfg DJANGO_CONFIGURATION=production manage-cvmfs-stratum-uploader.py migrate --verbosity=0
+echo 'Create static pages'
+DJANGO_CONFIG_FILE=%{PROJECT_ROOT}/application.cfg DJANGO_CONFIGURATION=production manage-cvmfs-stratum-uploader.py init_flatpages --verbosity=0
 
 echo 'Unpack static files'
 DJANGO_CONFIG_FILE=%{PROJECT_ROOT}/application.cfg DJANGO_CONFIGURATION=production manage-cvmfs-stratum-uploader.py collectstatic --noinput --verbosity=0
