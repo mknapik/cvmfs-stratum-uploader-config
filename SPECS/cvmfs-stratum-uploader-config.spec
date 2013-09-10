@@ -1,5 +1,5 @@
 Name:           cvmfs-stratum-uploader-config
-Version:        0.1.7
+Version:        0.2.0
 Release:        1%{?dist}
 Summary:        Provides example configuration for cvmfs-stratum-uploader.
 
@@ -22,7 +22,7 @@ Packager:       Michal.Knapik@stfc.ac.uk
 #BuildRequires:  
 
 AutoReqProv: no
-Requires: openssl, httpd >= 2.2.15, cvmfs-stratum-uploader >= 0.1.7
+Requires: openssl, httpd >= 2.2.15, cvmfs-stratum-uploader >= 0.2.0
 
 %description
 Provides configuration for cvmfs-stratum-uploader.
@@ -77,7 +77,7 @@ echo 'Setup database'
 DJANGO_CONFIG_FILE=%{PROJECT_ROOT}/application.cfg DJANGO_CONFIGURATION=production manage-cvmfs-stratum-uploader.py syncdb --verbosity=0
 DJANGO_CONFIG_FILE=%{PROJECT_ROOT}/application.cfg DJANGO_CONFIGURATION=production manage-cvmfs-stratum-uploader.py migrate --verbosity=0
 echo 'Create static pages'
-DJANGO_CONFIG_FILE=%{PROJECT_ROOT}/application.cfg DJANGO_CONFIGURATION=production manage-cvmfs-stratum-uploader.py init_flatpages --verbosity=0
+DJANGO_CONFIG_FILE=%{PROJECT_ROOT}/application.cfg DJANGO_CONFIGURATION=production manage-cvmfs-stratum-uploader.py init_flatpages `hostname` --verbosity=0
 
 echo 'Unpack static files'
 DJANGO_CONFIG_FILE=%{PROJECT_ROOT}/application.cfg DJANGO_CONFIGURATION=production manage-cvmfs-stratum-uploader.py collectstatic --noinput --verbosity=0
