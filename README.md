@@ -1,10 +1,21 @@
 cvmfs-stratum-uploader-config
 =============================
 
-Provides configuration for cvmfs-stratum-uploader.
+  Provides configuration for [cvmfs-stratum-uploader](https://github.com/mknapik/cvmfs-stratum-uploader).
 
 
 ## Building RPM
+
+### Prerequisites
+
++ **rpm-builder** `4.8.0` - `yum install rpm-build`
++ **git** `>=1.5` - `yum install git`
+
+### Dependencies
+
+1. Download all dependencies:
+    + [Django](https://www.djangoproject.com/)>=`1.5.1`
+    + [South](http://south.aeracode.org/)>=`0.8.1`
 
 ### Setup the environment
 
