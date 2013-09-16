@@ -14,8 +14,8 @@ cvmfs-stratum-uploader-config
 ### Dependencies
 
 1. Download all dependencies:
-    + [Django](https://www.djangoproject.com/)>=`1.5.1`
-    + [South](http://south.aeracode.org/)>=`0.8.1`
+    + [Django](https://www.djangoproject.com/) `>=1.5.1`
+    + [South](http://south.aeracode.org/) `>=0.8.1`
 
 ### Setup the environment
 
@@ -57,3 +57,17 @@ cvmfs-stratum-uploader-config
   rpm -i cvmfs-stratum-uploader-config-*\.rpm
   ```
 
+## Customize Configuration
+
+The configuration package consist basically of two config files:
+
+1. `site.httpd.conf` - defines configuration for *Apache* `httpd`,
+tells the web server where the application is placed, 
+what is the Python path and specifies which SLL Certificate configuration
+2. `application.cfg` - contains the application specific configuration.
+It uses standard [ConfigParser](http://docs.python.org/2/library/configparser.html) syntax.
+The file defines database credentials, project paths and others Django settings.
+
+### `site.httpd.conf`
+
+### `application.cfg`
