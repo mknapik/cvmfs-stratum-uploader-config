@@ -1,5 +1,5 @@
 Name:           cvmfs-stratum-uploader-config
-Version:        0.2.4
+Version:        0.2.5
 Release:        1%{?dist}
 Summary:        Provides example configuration for cvmfs-stratum-uploader.
 
@@ -13,7 +13,7 @@ BuildRoot:      %{_tmppath}/%{name}-${version}-${release}-root-%(%{__id_u} -n)
 Vendor:         STFC GridPP, Michal Knapik <Michal.Knapik@stfc.ac.uk>
 Packager:       Michal.Knapik@stfc.ac.uk
 
-%define APPLICATION_ROOT            "/var/www/cvmfs-stratum-uploader"
+%define APPLICATION_ROOT        "/var/www/cvmfs-stratum-uploader"
 %define CERTIFICATE_PATH        "/etc/grid-security"
 %define PYTHON_PATH             `python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())"`
 %define SITES_AVAILABLE_PATH    "/etc/httpd/conf.d"
