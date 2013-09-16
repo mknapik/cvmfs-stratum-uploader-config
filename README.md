@@ -61,7 +61,7 @@ cvmfs-stratum-uploader-config
 
 The configuration package consist basically of two config files:
 
-1. `site.httpd.conf` - defines configuration for *Apache* `httpd`,
+1. `site.httpd.conf` - defines configuration for **Apache** `httpd`,
 tells the web server where the application is placed, 
 what is the Python path and specifies which SLL Certificate configuration
 2. `application.cfg` - contains the application specific configuration.
@@ -132,7 +132,7 @@ The file uses standard [ConfigParser](http://docs.python.org/2/library/configpar
 Config is read after processing web application's `settings/production.py`.
 It overrides all settings included inside the application.
 
-The *cvmfs-stratum-uploader* looks for config file in three places:
+The **cvmfs-stratum-uploader** looks for config file in three places:
 
 1. `/var/www/cvmfs-stratum-uploader/application.cfg`
 2. `$HOME/.cvmfs-stratum-uploader.cfg`
@@ -143,20 +143,20 @@ and each config file overwrites individual settings set by previous ones.
 
 Config is divided into 6 parts:
 
-1. *database* - path to Sqlite3 file or database credentials should be provided here
-2. *path* - contains 3 paths to set 
+1. **database** - path to Sqlite3 file or database credentials should be provided here
+2. **path** - contains 3 paths to set 
   
   1. `PROJECT_ROOT` - path to sources of application
   2. `MEDIA_ROOT` - path to directory when uploads are stored
   3. `STATIC_ROOT` - path to directory when static assets are put
 
-3. *url* - allows to customize hostname and address paths to assets or media files:
+3. **url** - allows to customize hostname and address paths to assets or media files:
 
   1. `HOSTNAME` - used for generating proper links; default ``hostname``
   2. `MEDIA_URL` - default `/media/`
   3. `STATIC_URL` - default `/static/`
 
-4. *security* - in this section unique
+4. **security** - in this section unique
 [secret keys](https://docs.djangoproject.com/en/dev/ref/settings/#secret-key) required by Django have to set.
 There is also possibility to limit number of hosts which can access the site.
 
@@ -164,7 +164,7 @@ There is also possibility to limit number of hosts which can access the site.
   2. `CSRF_MIDDLEWARE_SECRET`
   3. `ALLOWED_HOSTS`
 
-5. *debug* - allows to set up extra debugging information.
+5. **debug** - allows to set up extra debugging information.
 Changing these settings is not recommended for production.
 Refer to [Django documentation](https://docs.djangoproject.com/en/dev/ref/settings) for more details.
 
@@ -174,5 +174,5 @@ Refer to [Django documentation](https://docs.djangoproject.com/en/dev/ref/settin
   1. `INTERNAL_IPS`
   1. `SKIP_CSRF_MIDDLEWARE`
 
-6. *misc* - all other Django settings can be customized in this section.
+6. **misc** - all other Django settings can be customized in this section.
 
