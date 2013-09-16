@@ -13,12 +13,13 @@ BuildRoot:      %{_tmppath}/%{name}-${version}-${release}-root-%(%{__id_u} -n)
 Vendor:         STFC GridPP, Michal Knapik <Michal.Knapik@stfc.ac.uk>
 Packager:       Michal.Knapik@stfc.ac.uk
 
-%define PROJECT_ROOT            "/var/www/cvmfs-stratum-uploader"
+%define APPLICATION_ROOT            "/var/www/cvmfs-stratum-uploader"
 %define CERTIFICATE_PATH        "/etc/grid-security"
 %define PYTHON_PATH             `python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())"`
 %define SITES_AVAILABLE_PATH    "/etc/httpd/conf.d"
 %define SECRET_KEY              "`openssl rand -base64 32`"
 %define CSRF_MIDDLEWARE_SECRET  "`openssl rand -base64 32`"
+%define HOSTNAME                `hostname`
 #BuildRequires:  
 
 AutoReqProv: no
@@ -61,30 +62,30 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 echo 'Setup application config'
-sed -i -e 's|__SECRET_KEY__|'%{SECRET_KEY}'|g' %{PROJECT_ROOT}/application.cfg
-sed -i -e 's|__CSRF_MIDDLEWARE_SECRET__|'%{CSRF_MIDDLEWARE_SECRET}'|g' %{PROJECT_ROOT}/application.cfg
-sed -i -e 's|__PROJECT_ROOT__|'%{PROJECT_ROOT}'|g' %{PROJECT_ROOT}/application.cfg
+sed -i -e 's|__SECRET_KEY__|'%{SECRET_KEY}'|g' %{APPLICATION_ROOT}/application.cfg
+sed -i -e 's|__CSRF_MIDDLEWARE_SECRET__|'%{CSRF_MIDDLEWARE_SECRET}'|g' %{APPLICATION_ROOT}/application.cfg
+sed -i -e 's|__APPLICATION_ROOT__|'%{APPLICATION_ROOT}'|g' %{APPLICATION_ROOT}/application.cfg
 
 echo 'Setup httpd site'
-sed -i -e 's|__FULL_HOST_NAME__|'`hostname`'|g' %{PROJECT_ROOT}/site.httpd.conf
-sed -i -e 's|__PROJECT_ROOT__|'%{PROJECT_ROOT}'|g' %{PROJECT_ROOT}/site.httpd.conf
-sed -i -e 's|__CERTIFICATE_PATH__|'%{CERTIFICATE_PATH}'|g' %{PROJECT_ROOT}/site.httpd.conf
-sed -i -e 's|__PYTHON_PATH__|'%{PYTHON_PATH}'|g' %{PROJECT_ROOT}/site.httpd.conf
+sed -i -e 's|__FULL_HOST_NAME__|'%{HOSTNAME}'|g' %{APPLICATION_ROOT}/site.httpd.conf
+sed -i -e 's|__APPLICATION_ROOT__|'%{APPLICATION_ROOT}'|g' %{APPLICATION_ROOT}/site.httpd.conf
+sed -i -e 's|__CERTIFICATE_PATH__|'%{CERTIFICATE_PATH}'|g' %{APPLICATION_ROOT}/site.httpd.conf
+sed -i -e 's|__PYTHON_PATH__|'%{PYTHON_PATH}'|g' %{APPLICATION_ROOT}/site.httpd.conf
 
-ln -sf %{PROJECT_ROOT}/site.httpd.conf %{SITES_AVAILABLE_PATH}/cvmfs-stratum-uploader.conf
+ln -sf %{APPLICATION_ROOT}/site.httpd.conf %{SITES_AVAILABLE_PATH}/cvmfs-stratum-uploader.conf
 
 echo 'Setup database'
-DJANGO_CONFIG_FILE=%{PROJECT_ROOT}/application.cfg DJANGO_CONFIGURATION=production manage-cvmfs-stratum-uploader.py syncdb --verbosity=0
-DJANGO_CONFIG_FILE=%{PROJECT_ROOT}/application.cfg DJANGO_CONFIGURATION=production manage-cvmfs-stratum-uploader.py migrate --verbosity=0
+DJANGO_CONFIG_FILE=%{APPLICATION_ROOT}/application.cfg DJANGO_CONFIGURATION=production manage-cvmfs-stratum-uploader.py syncdb --verbosity=0
+DJANGO_CONFIG_FILE=%{APPLICATION_ROOT}/application.cfg DJANGO_CONFIGURATION=production manage-cvmfs-stratum-uploader.py migrate --verbosity=0
 echo 'Create static pages'
-DJANGO_CONFIG_FILE=%{PROJECT_ROOT}/application.cfg DJANGO_CONFIGURATION=production manage-cvmfs-stratum-uploader.py init_flatpages `hostname` --verbosity=0
+DJANGO_CONFIG_FILE=%{APPLICATION_ROOT}/application.cfg DJANGO_CONFIGURATION=production manage-cvmfs-stratum-uploader.py init_flatpages %{HOSTNAME} --verbosity=0
 
 echo 'Unpack static files'
-DJANGO_CONFIG_FILE=%{PROJECT_ROOT}/application.cfg DJANGO_CONFIGURATION=production manage-cvmfs-stratum-uploader.py collectstatic --noinput --verbosity=0
+DJANGO_CONFIG_FILE=%{APPLICATION_ROOT}/application.cfg DJANGO_CONFIGURATION=production manage-cvmfs-stratum-uploader.py collectstatic --noinput --verbosity=0
 
 %postun
 rm %{SITES_AVAILABLE_PATH}/cvmfs-stratum-uploader.conf
-rm -r %{PROJECT_ROOT}/static
+rm -r %{APPLICATION_ROOT}/static
 
 %changelog
 
