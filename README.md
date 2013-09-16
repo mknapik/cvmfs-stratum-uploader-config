@@ -68,7 +68,7 @@ what is the Python path and specifies which SLL Certificate configuration
 It uses standard [ConfigParser](http://docs.python.org/2/library/configparser.html) syntax.
 The file defines database credentials, project paths and others Django settings.
 
-Both files have special character sequences with `__` prefix and suffix (e.g. `__PROJECT_ROOT__`).
+Both files have special character sequences with `__` prefix and suffix (e.g. `__APPLICATION_ROOT__`).
 These sequences are replaced with smart defaults while installing the RPM.
 
 ### `site.httpd.conf`
@@ -115,12 +115,64 @@ Default value is fetched with shell command:
   ```
 If you cannot rely on that command `ServerName` can be changed manually.
 
-4. `__PROJECT_ROOT__` points to the directory inside `DocumentRoot`.
+4. `__APPLICATION_ROOT__` points to the directory inside `DocumentRoot`.
 By default it contains application and server config files, database file, static assets (images, stylesheets, etc.)
 and all the uploads.
-If `__PROJECT_ROOT__/uploads` or `__PROJECT_ROOT__/static` is changed
+If `__APPLICATION_ROOT__/uploads` or `__APPLICATION_ROOT__/static` is changed
 the analogous section in `application.cfg` has to be fixed.
 
 
 ### `application.cfg`
+
+This is application config, it can be placed in any directory readable by `httpd` process owner.
+By default the file is placed in `/var/www/cvmfs-stratum-uploader`
+which is also `__APPLICATION_ROOT__` for all application settings.
+
+The file uses standard [ConfigParser](http://docs.python.org/2/library/configparser.html) syntax.
+Config is read after processing web application's `settings/production.py`.
+It overrides all settings included inside the application.
+
+The *cvmfs-stratum-uploader* looks for config file in three places:
+
+1. `/var/www/cvmfs-stratum-uploader/application.cfg`
+2. `$HOME/.cvmfs-stratum-uploader.cfg`
+3. `$DJANGO_CONFIG_FILE` - but only if environmental variable is set
+
+Files are loaded one by one in orderd showed above
+and each config file overwrites individual settings set by previous ones.
+
+Config is divided into 6 parts:
+
+1. *database* - path to Sqlite3 file or database credentials should be provided here
+2. *path* - contains 3 paths to set 
+  
+  1. `PROJECT_ROOT` - path to sources of application
+  2. `MEDIA_ROOT` - path to directory when uploads are stored
+  3. `STATIC_ROOT` - path to directory when static assets are put
+
+3. *url* - allows to customize hostname and address paths to assets or media files:
+
+  1. `HOSTNAME` - used for generating proper links; default ``hostname``
+  2. `MEDIA_URL` - default `/media/`
+  3. `STATIC_URL` - default `/static/`
+
+4. *security* - in this section unique
+[secret keys](https://docs.djangoproject.com/en/dev/ref/settings/#secret-key) required by Django have to set.
+There is also possibility to limit number of hosts which can access the site.
+
+  1. `SECRET_KEY`
+  2. `CSRF_MIDDLEWARE_SECRET`
+  3. `ALLOWED_HOSTS`
+
+5. *debug* - allows to set up extra debugging information.
+Changing these settings is not recommended for production.
+Refer to [Django documentation](https://docs.djangoproject.com/en/dev/ref/settings) for more details.
+
+  1. `DEBUG`
+  1. `TEMPLATE_DEBUG`
+  1. `VIEW_TEST`
+  1. `INTERNAL_IPS`
+  1. `SKIP_CSRF_MIDDLEWARE`
+
+6. *misc* - all other Django settings can be customized in this section.
 
