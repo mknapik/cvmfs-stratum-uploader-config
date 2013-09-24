@@ -10,8 +10,8 @@ Source0:        %name
 BuildArch:      noarch
 BuildRoot:      %{_tmppath}/%{name}-${version}-${release}-root-%(%{__id_u} -n)
 
-Vendor:         STFC GridPP, Michal Knapik <Michal.Knapik@stfc.ac.uk>
-Packager:       Michal.Knapik@stfc.ac.uk
+Vendor:         Science & Technology Facilities Council UK
+Packager:       Michal Knapik <Michal.Knapik@stfc.ac.uk>
 
 %define APPLICATION_ROOT        "/var/www/cvmfs-stratum-uploader"
 %define CERTIFICATE_PATH        "/etc/grid-security"
