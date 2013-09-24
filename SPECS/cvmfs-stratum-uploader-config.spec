@@ -1,5 +1,5 @@
 Name:           cvmfs-stratum-uploader-config
-Version:        0.2.5
+Version:        0.3.0
 Release:        1%{?dist}
 Summary:        Provides example configuration for cvmfs-stratum-uploader.
 
@@ -23,7 +23,7 @@ Packager:       Michal Knapik <Michal.Knapik@stfc.ac.uk>
 #BuildRequires:  
 
 AutoReqProv: no
-Requires: openssl, httpd >= 2.2.15, cvmfs-stratum-uploader >= 0.2.4
+Requires: openssl, httpd >= 2.2.15, cvmfs-stratum-uploader >= 0.3.0
 
 %description
 Provides configuration for cvmfs-stratum-uploader.
