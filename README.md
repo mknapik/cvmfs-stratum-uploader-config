@@ -1,7 +1,7 @@
 cvmfs-stratum-uploader-config
 =============================
 
-  Provides configuration for [cvmfs-stratum-uploader](https://github.com/mknapik/cvmfs-stratum-uploader).
+  Provides configuration for [cvmfs-stratum-uploader](https://github.com/stfc/cvmfs-stratum-uploader).
 
 
 ## Building RPM
@@ -37,7 +37,7 @@ cvmfs-stratum-uploader-config
 1. Fetch the project and link it to `~/rpmbuild` directory:
 
   ```bash
-  git clone https://github.com/mknapik/cvmfs-stratum-uploader-config
+  git clone https://github.com/stfc/cvmfs-stratum-uploader-config
   ln -s cvmfs-stratum-uploader-config rpmbuild
   ```
 

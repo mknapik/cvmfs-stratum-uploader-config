@@ -5,7 +5,7 @@ Summary:        Provides example configuration for cvmfs-stratum-uploader.
 
 Group:          Development/Libraries
 License:        Apache License
-URL:            git://github.com/mknapik/cvmfs-stratum-uploader-config.git
+URL:            git://github.com/stfc/cvmfs-stratum-uploader-config.git
 Source0:        %name
 BuildArch:      noarch
 BuildRoot:      %{_tmppath}/%{name}-${version}-${release}-root-%(%{__id_u} -n)
